@@ -10,6 +10,7 @@ import glitchcore.event.player.PlayerEvent;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.ServerScoreboard;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -17,7 +18,9 @@ import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.saveddata.SavedDataType;
 import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.scores.ScoreboardSaveData;
 import sereneseasons.api.SSGameRules;
 import sereneseasons.api.season.ISeasonState;
 import sereneseasons.api.season.Season;
@@ -121,6 +124,27 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
         // Send the update packet
         ModPackets.HANDLER.sendToAll(new SyncSeasonCyclePacket(level.dimension(), savedData.seasonCycleTicks), ((ServerLevel)level).getServer());
     }
+
+    public static final SavedDataType<SeasonSavedData> SAVED_DATA_TYPE = new SavedDataType<SeasonSavedData>(
+            SeasonSavedData.DATA_IDENTIFIER, context -> {
+                int startingSeason = ModConfig.seasons.startingSubSeason;
+                int seasonCycleTicks = 0;
+
+                if (startingSeason == 0)
+                {
+                    seasonCycleTicks = (context.levelOrThrow().random.nextInt(12)) * SeasonTime.ZERO.getSubSeasonDuration();
+                }
+
+                if (startingSeason > 0)
+                {
+                    seasonCycleTicks = (startingSeason - 1) * SeasonTime.ZERO.getSubSeasonDuration();
+                }
+
+                SeasonSavedData savedData = new SeasonSavedData(seasonCycleTicks);
+                savedData.setDirty(); //Mark for saving
+                return savedData;
+            }, context -> SeasonSavedData.CODEC, DataFixTypes.LEVEL
+    );
     
     public static SeasonSavedData getSeasonSavedData(Level w)
     {
@@ -129,30 +153,8 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
             return null;
         }
 
-        ServerLevel world = (ServerLevel)w;
-        DimensionDataStorage saveDataManager = world.getChunkSource().getDataStorage();
-
-        Supplier<SeasonSavedData> defaultSaveDataSupplier = () ->
-        {
-            SeasonSavedData savedData = new SeasonSavedData();
-
-            int startingSeason = ModConfig.seasons.startingSubSeason;
-
-            if (startingSeason == 0)
-            {
-                savedData.seasonCycleTicks = (world.random.nextInt(12)) * SeasonTime.ZERO.getSubSeasonDuration();
-            }
-
-            if (startingSeason > 0)
-            {
-                savedData.seasonCycleTicks = (startingSeason - 1) * SeasonTime.ZERO.getSubSeasonDuration();
-            }
-
-            savedData.setDirty(); //Mark for saving
-            return savedData;
-        };
-
-        return saveDataManager.computeIfAbsent(new SavedData.Factory<>(defaultSaveDataSupplier, SeasonSavedData::load, DataFixTypes.LEVEL), SeasonSavedData.DATA_IDENTIFIER);
+        DimensionDataStorage saveDataManager = ((ServerLevel)w).getChunkSource().getDataStorage();
+        return saveDataManager.computeIfAbsent(SAVED_DATA_TYPE);
     }
 
     //

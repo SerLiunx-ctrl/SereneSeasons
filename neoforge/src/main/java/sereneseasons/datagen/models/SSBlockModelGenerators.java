@@ -8,6 +8,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelOutput;
 import net.minecraft.client.data.models.blockstates.*;
 import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -20,10 +21,10 @@ import java.util.function.Consumer;
 
 public class SSBlockModelGenerators extends BlockModelGenerators
 {
-    final Consumer<BlockStateGenerator> blockStateOutput;
+    final Consumer<BlockModelDefinitionGenerator> blockStateOutput;
     final BiConsumer<ResourceLocation, ModelInstance> modelOutput;
 
-    public SSBlockModelGenerators(Consumer<BlockStateGenerator> blockStateOutput, ItemModelOutput itemModelOutput, BiConsumer<ResourceLocation, ModelInstance> modelOutput)
+    public SSBlockModelGenerators(Consumer<BlockModelDefinitionGenerator> blockStateOutput, ItemModelOutput itemModelOutput, BiConsumer<ResourceLocation, ModelInstance> modelOutput)
     {
         super(blockStateOutput, itemModelOutput, modelOutput);
         this.blockStateOutput = blockStateOutput;
@@ -47,23 +48,23 @@ public class SSBlockModelGenerators extends BlockModelGenerators
                 .put(TextureSlot.SIDE, sideTexture);
 
         this.blockStateOutput.accept(
-            MultiVariantGenerator.multiVariant(SSBlocks.SEASON_SENSOR).with(
-                PropertyDispatch.property(SeasonSensorBlock.SEASON)
+            MultiVariantGenerator.dispatch(SSBlocks.SEASON_SENSOR).with(
+                PropertyDispatch.initial(SeasonSensorBlock.SEASON)
                     .select(
                         Season.SUMMER.ordinal(),
-                        Variant.variant().with(VariantProperties.MODEL, ModelTemplates.DAYLIGHT_DETECTOR.createWithSuffix(SSBlocks.SEASON_SENSOR, "_summer", textures, this.modelOutput))
+                        plainVariant(ModelTemplates.DAYLIGHT_DETECTOR.createWithSuffix(SSBlocks.SEASON_SENSOR, "_summer", textures, this.modelOutput))
                     )
                     .select(
                         Season.AUTUMN.ordinal(),
-                        Variant.variant().with(VariantProperties.MODEL, ModelTemplates.DAYLIGHT_DETECTOR.createWithSuffix(SSBlocks.SEASON_SENSOR, "_autumn", autumnTextures, this.modelOutput))
+                        plainVariant(ModelTemplates.DAYLIGHT_DETECTOR.createWithSuffix(SSBlocks.SEASON_SENSOR, "_autumn", autumnTextures, this.modelOutput))
                     )
                     .select(
                         Season.WINTER.ordinal(),
-                        Variant.variant().with(VariantProperties.MODEL, ModelTemplates.DAYLIGHT_DETECTOR.createWithSuffix(SSBlocks.SEASON_SENSOR, "_winter", winterTextures, this.modelOutput))
+                        plainVariant(ModelTemplates.DAYLIGHT_DETECTOR.createWithSuffix(SSBlocks.SEASON_SENSOR, "_winter", winterTextures, this.modelOutput))
                     )
                     .select(
                         Season.SPRING.ordinal(),
-                        Variant.variant().with(VariantProperties.MODEL, ModelTemplates.DAYLIGHT_DETECTOR.create(SSBlocks.SEASON_SENSOR, springTextures, this.modelOutput))
+                        plainVariant(ModelTemplates.DAYLIGHT_DETECTOR.create(SSBlocks.SEASON_SENSOR, springTextures, this.modelOutput))
                     )
             )
         );

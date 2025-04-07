@@ -4,6 +4,7 @@
  ******************************************************************************/
 package sereneseasons.client.item;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
@@ -46,6 +47,12 @@ public class ContextCalendarType implements SelectItemModelProperty<CalendarType
         }
 
         return CalendarType.STANDARD;
+    }
+
+    @Override
+    public Codec<CalendarType> valueCodec()
+    {
+        return CalendarType.CODEC;
     }
 
 

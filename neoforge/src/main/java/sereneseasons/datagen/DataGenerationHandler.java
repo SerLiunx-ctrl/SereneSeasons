@@ -8,7 +8,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import sereneseasons.datagen.models.SSModelProvider;
 import sereneseasons.datagen.provider.SSRecipeProvider;
@@ -21,7 +20,6 @@ public class DataGenerationHandler
     {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
         // Client
         generator.addProvider(true, new SSModelProvider(output));
