@@ -12,7 +12,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import sereneseasons.datagen.models.SSModelProvider;
 import sereneseasons.datagen.provider.SSRecipeProvider;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber
 public class DataGenerationHandler
 {
     @SubscribeEvent
