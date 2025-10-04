@@ -100,7 +100,7 @@ public class SeasonSensorBlock extends BaseEntityBlock
     {
         if (player.mayBuild())
         {
-            if (level.isClientSide)
+            if (level.isClientSide())
             {
                 return InteractionResult.SUCCESS;
             }
@@ -139,12 +139,12 @@ public class SeasonSensorBlock extends BaseEntityBlock
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return !level.isClientSide && level.dimensionType().hasSkyLight() ? createTickerHelper(type, (BlockEntityType<SeasonSensorBlockEntity>) SSBlockEntities.SEASON_SENSOR, SeasonSensorBlock::tickEntity) : null;
+        return !level.isClientSide() && level.dimensionType().hasSkyLight() ? createTickerHelper(type, (BlockEntityType<SeasonSensorBlockEntity>) SSBlockEntities.SEASON_SENSOR, SeasonSensorBlock::tickEntity) : null;
     }
 
     private static void tickEntity(Level level, BlockPos pos, BlockState state, SeasonSensorBlockEntity entity)
     {
-        if (level != null && !level.isClientSide && SeasonHelper.getSeasonState(level).getSeasonCycleTicks() % 20L == 0L)
+        if (level != null && !level.isClientSide() && SeasonHelper.getSeasonState(level).getSeasonCycleTicks() % 20L == 0L)
         {
             Block block = state.getBlock();
             if (block instanceof SeasonSensorBlock)

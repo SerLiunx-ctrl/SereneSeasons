@@ -115,38 +115,19 @@ public class RandomUpdateHandler
 			if (ModConfig.seasons.generateSnowAndIce && ModConfig.seasons.isDimensionWhitelisted(level.dimension()))
 			{
 				ChunkMap chunkMap = level.getChunkSource().chunkMap;
-				DistanceManager distanceManager = chunkMap.getDistanceManager();
-
-				int l = distanceManager.getNaturalSpawnChunkCount();
-				List<ChunkAndHolder> list = Lists.newArrayListWithCapacity(l);
-
-				// Replicate the behaviour of ServerChunkCache
-				for (ChunkHolder chunkholder : chunkMap.getChunks())
-				{
-					LevelChunk levelchunk = chunkholder.getTickingChunk();
-					if (levelchunk != null)
-					{
-						list.add(new ChunkAndHolder(levelchunk, chunkholder));
-					}
-				}
-
-				Collections.shuffle(list);
-
-				for (ChunkAndHolder serverchunkcache$chunkandholder : list)
-				{
-					LevelChunk levelChunk = serverchunkcache$chunkandholder.chunk;
-					ChunkPos chunkpos = levelChunk.getPos();
+				chunkMap.forEachBlockTickingChunk(chunk -> {
+					ChunkPos chunkpos = chunk.getPos();
 					if ((chunkMap.anyPlayerCloseEnoughForSpawning(chunkpos)))
 					{
 						if (level.shouldTickBlocksAt(chunkpos.toLong()))
 						{
 							for(int i = 0; i < rolls; i++)
 							{
-								meltInChunk(chunkMap, levelChunk, meltRand);
+								meltInChunk(chunkMap, chunk, meltRand);
 							}
 						}
 					}
-				}
+				});
 			}
 		}
 	}
