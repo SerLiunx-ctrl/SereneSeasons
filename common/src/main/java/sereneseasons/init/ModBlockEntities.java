@@ -4,8 +4,7 @@
  ******************************************************************************/
 package sereneseasons.init;
 
-import net.minecraft.Util;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -21,15 +20,15 @@ import java.util.function.BiConsumer;
 
 public class ModBlockEntities
 {
-    public static void registerBlockEntities(BiConsumer<ResourceLocation, BlockEntityType<?>> func)
+    public static void registerBlockEntities(BiConsumer<Identifier, BlockEntityType<?>> func)
     {
         SSBlockEntities.SEASON_SENSOR = register(func, "season_sensor", SeasonSensorBlockEntity::new, Set.of(SSBlocks.SEASON_SENSOR));
     }
 
-    private static <T extends BlockEntity> BlockEntityType<?> register(BiConsumer<ResourceLocation, BlockEntityType<?>> func, String name, BlockEntityType.BlockEntitySupplier<T> supplier, Set<Block> blocks)
+    private static <T extends BlockEntity> BlockEntityType<?> register(BiConsumer<Identifier, BlockEntityType<?>> func, String name, BlockEntityType.BlockEntitySupplier<T> supplier, Set<Block> blocks)
     {
         var type = new BlockEntityType(supplier, blocks);
-        func.accept(ResourceLocation.fromNamespaceAndPath(SereneSeasons.MOD_ID, name), type);
+        func.accept(Identifier.fromNamespaceAndPath(SereneSeasons.MOD_ID, name), type);
         return type;
     }
 }

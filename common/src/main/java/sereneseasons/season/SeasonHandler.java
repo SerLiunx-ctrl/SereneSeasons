@@ -50,7 +50,7 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
         lastDayTimes.put(level, dayTime);
 
         // Only tick seasons if the game rule is enabled
-        if (!level.getGameRules().getBoolean(SSGameRules.RULE_DOSEASONCYCLE))
+        if (!level.getGameRules().get(SSGameRules.RULE_DOSEASONCYCLE))
             return;
 
         if (!ModConfig.seasons.progressSeasonWhileOffline)
@@ -126,24 +126,7 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
     }
 
     public static final SavedDataType<SeasonSavedData> SAVED_DATA_TYPE = new SavedDataType<SeasonSavedData>(
-            SeasonSavedData.DATA_IDENTIFIER, context -> {
-                int startingSeason = ModConfig.seasons.startingSubSeason;
-                int seasonCycleTicks = 0;
-
-                if (startingSeason == 0)
-                {
-                    seasonCycleTicks = (context.levelOrThrow().random.nextInt(12)) * SeasonTime.ZERO.getSubSeasonDuration();
-                }
-
-                if (startingSeason > 0)
-                {
-                    seasonCycleTicks = (startingSeason - 1) * SeasonTime.ZERO.getSubSeasonDuration();
-                }
-
-                SeasonSavedData savedData = new SeasonSavedData(seasonCycleTicks);
-                savedData.setDirty(); //Mark for saving
-                return savedData;
-            }, context -> SeasonSavedData.CODEC, DataFixTypes.LEVEL
+            SeasonSavedData.DATA_IDENTIFIER, SeasonSavedData::new, SeasonSavedData.CODEC, DataFixTypes.LEVEL
     );
     
     public static SeasonSavedData getSeasonSavedData(Level w)
@@ -154,7 +137,14 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider
         }
 
         DimensionDataStorage saveDataManager = ((ServerLevel)w).getChunkSource().getDataStorage();
-        return saveDataManager.computeIfAbsent(SAVED_DATA_TYPE);
+        SeasonSavedData savedData = saveDataManager.computeIfAbsent(SAVED_DATA_TYPE);
+
+        if (ModConfig.seasons.startingSubSeason == 0)
+        {
+            savedData.seasonCycleTicks = (w.random.nextInt(12)) * SeasonTime.ZERO.getSubSeasonDuration();
+        }
+
+        return savedData;
     }
 
     //

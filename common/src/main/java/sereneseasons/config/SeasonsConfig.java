@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import glitchcore.util.Environment;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -57,7 +57,7 @@ public class SeasonsConfig extends glitchcore.config.Config
         {
             try
             {
-                ResourceLocation.parse(s);
+                Identifier.parse(s);
             }
             catch (Exception e)
             {
@@ -85,7 +85,7 @@ public class SeasonsConfig extends glitchcore.config.Config
 
     // Dimension settings
     public List<String> whitelistedDimensions;
-    private static final List<String> defaultWhitelistedDimensions = Lists.newArrayList(Level.OVERWORLD.location().toString());
+    private static final List<String> defaultWhitelistedDimensions = Lists.newArrayList(Level.OVERWORLD.identifier().toString());
 
     // Snow melting settings
     private List<Config> seasonProperties;
@@ -137,7 +137,7 @@ public class SeasonsConfig extends glitchcore.config.Config
     {
         for (String whitelistedDimension : whitelistedDimensions)
         {
-            if (dimension.location().toString().equals(whitelistedDimension))
+            if (dimension.identifier().toString().equals(whitelistedDimension))
             {
                 return true;
             }

@@ -23,6 +23,4 @@ accessible method net/minecraft/server/level/ChunkMap forEachBlockTickingChunk (
 
 # Commands
 accessible field net/minecraft/commands/synchronization/ArgumentTypeInfos BY_CLASS Ljava/util/Map;
-
 accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V
-

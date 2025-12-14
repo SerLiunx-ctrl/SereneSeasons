@@ -148,7 +148,7 @@ public class ModFertility
                 if (blockKey.isEmpty())
                     continue;
 
-                String plantName = blockKey.get().location().toString();
+                String plantName = blockKey.get().identifier().toString();
                 cropSet.add(plantName);
 
                 if (bitmask != 0)
@@ -185,7 +185,7 @@ public class ModFertility
                 if (itemKey.isEmpty())
                     continue;
 
-                String plantName = itemKey.get().location().toString();
+                String plantName = itemKey.get().identifier().toString();
                 cropSet.add(plantName);
 
                 if (bitmask != 0)

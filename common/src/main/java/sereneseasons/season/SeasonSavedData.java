@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.TicketStorage;
 import net.minecraft.world.level.saveddata.SavedData;
+import sereneseasons.init.ModConfig;
 
 import java.util.List;
 
@@ -27,8 +28,25 @@ public class SeasonSavedData extends SavedData
 
     public int seasonCycleTicks;
 
+    public SeasonSavedData()
+    {
+        this(calculateDefaultSeasonCycleTicks());
+    }
+
     public SeasonSavedData(int seasonCycleTicks)
     {
         this.seasonCycleTicks = seasonCycleTicks;
+    }
+
+    private static int calculateDefaultSeasonCycleTicks() {
+        int startingSeason = ModConfig.seasons.startingSubSeason;
+        int seasonCycleTicks = 0;
+
+        if (startingSeason > 0)
+        {
+            seasonCycleTicks = (startingSeason - 1) * SeasonTime.ZERO.getSubSeasonDuration();
+        }
+
+        return seasonCycleTicks;
     }
 }

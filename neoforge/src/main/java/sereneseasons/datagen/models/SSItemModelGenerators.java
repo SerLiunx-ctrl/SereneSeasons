@@ -11,7 +11,7 @@ import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.RangeSelectItemModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import sereneseasons.api.SSItems;
 import sereneseasons.client.item.ContextCalendarType;
@@ -26,9 +26,9 @@ import java.util.function.BiConsumer;
 public class SSItemModelGenerators extends ItemModelGenerators
 {
     private final ItemModelOutput itemModelOutput;
-    private final BiConsumer<ResourceLocation, ModelInstance> modelOutput;
+    private final BiConsumer<Identifier, ModelInstance> modelOutput;
 
-    public SSItemModelGenerators(ItemModelOutput itemModelOutput, BiConsumer<ResourceLocation, ModelInstance> modelOutput) {
+    public SSItemModelGenerators(ItemModelOutput itemModelOutput, BiConsumer<Identifier, ModelInstance> modelOutput) {
         super(itemModelOutput, modelOutput);
         this.itemModelOutput = itemModelOutput;
         this.modelOutput = modelOutput;

@@ -7,7 +7,7 @@ package sereneseasons.mixin.client;
 import net.minecraft.client.renderer.item.properties.select.ContextDimension;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ExtraCodecs;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,11 +22,11 @@ public class MixinSelectItemModelProperties
 {
     @Shadow
     @Final
-    private static ExtraCodecs.LateBoundIdMapper<ResourceLocation, SelectItemModelProperty.Type<?, ?>> ID_MAPPER;
+    private static ExtraCodecs.LateBoundIdMapper<Identifier, SelectItemModelProperty.Type<?, ?>> ID_MAPPER;
 
     @Inject(method = "bootstrap", at=@At("TAIL"))
     private static void onBootstrap(CallbackInfo ci)
     {
-        ID_MAPPER.put(ResourceLocation.withDefaultNamespace("context_calendar_type"), ContextCalendarType.TYPE);
+        ID_MAPPER.put(Identifier.withDefaultNamespace("context_calendar_type"), ContextCalendarType.TYPE);
     }
 }

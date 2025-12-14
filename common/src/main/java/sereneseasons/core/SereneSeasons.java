@@ -27,7 +27,6 @@ public class SereneSeasons
         ModTags.setup();
         addRegistrars();
         addHandlers();
-        ModGameRules.init();
         ModPackets.init();
         ModAPI.init();
     }
@@ -40,6 +39,7 @@ public class SereneSeasons
         regHelper.addRegistrar(Registries.ITEM, ModItems::setup);
         regHelper.addRegistrar(Registries.CREATIVE_MODE_TAB, ModCreativeTab::registerCreativeTabs);
         regHelper.addRegistrar(Registries.COMMAND_ARGUMENT_TYPE, SeasonCommands::registerArguments);
+        regHelper.addRegistrar(Registries.GAME_RULE, ModGameRules::registerGameRules);
     }
 
     private static void addHandlers()

@@ -4,9 +4,9 @@
  ******************************************************************************/
 package sereneseasons.api;
 
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRule;
 
 public class SSGameRules
 {
-    public static GameRules.Key<GameRules.BooleanValue> RULE_DOSEASONCYCLE;
+    public static GameRule<Boolean> RULE_DOSEASONCYCLE;
 }
