@@ -13,3 +13,10 @@ tile.season_sensor_winter.name=季节传感器（冬）
 item.ss_icon.name=静谧四季图标
 
 item.season_clock.name=季节指示仪
+
+tooltip.season_seed.fertile_seasons.line=生长季节
+tooltip.season_seed.fertile_seasons.all=全年
+tooltip.season_seed.fertile_seasons.spring=春季
+tooltip.season_seed.fertile_seasons.summer=夏季
+tooltip.season_seed.fertile_seasons.autumn=秋季
+tooltip.season_seed.fertile_seasons.winter=冬季

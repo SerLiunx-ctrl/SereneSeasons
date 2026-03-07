@@ -7,51 +7,48 @@
  ******************************************************************************/
 package sereneseasons.util.config;
 
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import org.apache.commons.io.FileUtils;
+
 import sereneseasons.core.SereneSeasons;
 
 import java.io.File;
 import java.lang.reflect.Type;
 
-public class JsonUtil
-{
+public class JsonUtil {
     public static final Gson SERIALIZER = new GsonBuilder().setPrettyPrinting().create();
 
-    public static <T> T getOrCreateConfigFile(File configDir, String configName, T defaults, Type type)
-    {
+    public static <T> T getOrCreateConfigFile(
+            File configDir, String configName, T defaults, Type type) {
         File configFile = new File(configDir, configName);
 
-        //No config file, so create default config:
-        if (!configFile.exists())
-        {
+        // No config file, so create default config:
+        if (!configFile.exists()) {
             writeFile(configFile, defaults);
         }
 
-        try
-        {
-            return (T)SERIALIZER.fromJson(FileUtils.readFileToString(configFile), type);
-        }
-        catch (Exception e)
-        {
-            SereneSeasons.logger.error("Error parsing config from json: " + configFile.toString(), e);
+        try {
+            return (T) SERIALIZER.fromJson(FileUtils.readFileToString(configFile), type);
+        } catch (Exception e) {
+            SereneSeasons.logger.error(
+                    "Error parsing config from json: " + configFile.toString(), e);
         }
 
         return null;
     }
 
-    protected static boolean writeFile(File outputFile, Object obj)
-    {
-        try
-        {
+    protected static boolean writeFile(File outputFile, Object obj) {
+        try {
             FileUtils.write(outputFile, SERIALIZER.toJson(obj));
             return true;
-        }
-        catch (Exception e)
-        {
-            SereneSeasons.logger.error("Error writing config file " + outputFile.getAbsolutePath() + ": " + e.getMessage());
+        } catch (Exception e) {
+            SereneSeasons.logger.error(
+                    "Error writing config file "
+                            + outputFile.getAbsolutePath()
+                            + ": "
+                            + e.getMessage());
             return false;
         }
     }

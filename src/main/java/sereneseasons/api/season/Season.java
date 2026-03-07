@@ -1,18 +1,19 @@
 /*******************************************************************************
  * Copyright 2016, the Biomes O' Plenty Team
- * 
+ *
  * This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License.
- * 
+ *
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  ******************************************************************************/
 package sereneseasons.api.season;
 
-public enum Season 
-{
-    SPRING, SUMMER, AUTUMN, WINTER;
+public enum Season {
+    SPRING,
+    SUMMER,
+    AUTUMN,
+    WINTER;
 
-    public enum SubSeason implements ISeasonColorProvider
-    {
+    public enum SubSeason implements ISeasonColorProvider {
         EARLY_SPRING(SPRING, 0x778087, 0.85F, 0x6F818F, 0.85F, 0x869A68),
         MID_SPRING(SPRING, 0x6F818F, 0x5F849F, 0x7EA271),
         LATE_SPRING(SPRING, 0x678297, 0x3F89BF, 0x6EB283),
@@ -34,55 +35,52 @@ public enum Season
         private int foliageOverlay;
         private float foliageSaturationMultiplier;
         private int birchColor;
-        
-        SubSeason(Season season, int grassColour, float grassSaturation, int foliageColour, float foliageSaturation, int birchColor)
-        {
+
+        SubSeason(
+                Season season,
+                int grassColour,
+                float grassSaturation,
+                int foliageColour,
+                float foliageSaturation,
+                int birchColor) {
             this.season = season;
             this.grassOverlay = grassColour;
             this.grassSaturationMultiplier = grassSaturation;
             this.foliageOverlay = foliageColour;
-            this.foliageSaturationMultiplier = foliageSaturation; 
+            this.foliageSaturationMultiplier = foliageSaturation;
             this.birchColor = birchColor;
         }
-        
-        SubSeason(Season season, int grassColour, int foliageColour, int birchColor)
-        {
+
+        SubSeason(Season season, int grassColour, int foliageColour, int birchColor) {
             this(season, grassColour, -1, foliageColour, -1, birchColor);
         }
-        
-        public Season getSeason()
-        {
+
+        public Season getSeason() {
             return this.season;
         }
-        
-        public int getGrassOverlay()
-        {
+
+        public int getGrassOverlay() {
             return this.grassOverlay;
         }
-        
-        public float getGrassSaturationMultiplier()
-        {
+
+        public float getGrassSaturationMultiplier() {
             return this.grassSaturationMultiplier;
         }
-        
-        public int getFoliageOverlay()
-        {
+
+        public int getFoliageOverlay() {
             return this.foliageOverlay;
         }
-        
-        public float getFoliageSaturationMultiplier()
-        {
+
+        public float getFoliageSaturationMultiplier() {
             return this.foliageSaturationMultiplier;
         }
-        
-        public int getBirchColor()
-        {
+
+        public int getBirchColor() {
             return this.birchColor;
         }
     }
 
-    public enum TropicalSeason implements ISeasonColorProvider
-    {
+    public enum TropicalSeason implements ISeasonColorProvider {
         EARLY_DRY(0xFFFFFF, 0xFFFFFF, 0x80A755),
         MID_DRY(0xA58668, 0.8F, 0xB7867C, 0.95F, 0x98A54B),
         LATE_DRY(0x8E7B6D, 0.9F, 0xA08B86, 0.975F, 0x80A755),
@@ -98,8 +96,12 @@ public enum Season
         private float foliageSaturationMultiplier;
         private int birchColor;
 
-        TropicalSeason(int grassColour, float grassSaturation, int foliageColour, float foliageSaturation, int birchColor)
-        {
+        TropicalSeason(
+                int grassColour,
+                float grassSaturation,
+                int foliageColour,
+                float foliageSaturation,
+                int birchColor) {
             this.grassOverlay = grassColour;
             this.grassSaturationMultiplier = grassSaturation;
             this.foliageOverlay = foliageColour;
@@ -107,33 +109,27 @@ public enum Season
             this.birchColor = birchColor;
         }
 
-        TropicalSeason(int grassColour, int foliageColour, int birchColor)
-        {
+        TropicalSeason(int grassColour, int foliageColour, int birchColor) {
             this(grassColour, -1, foliageColour, -1, birchColor);
         }
 
-        public int getGrassOverlay()
-        {
+        public int getGrassOverlay() {
             return this.grassOverlay;
         }
 
-        public float getGrassSaturationMultiplier()
-        {
+        public float getGrassSaturationMultiplier() {
             return this.grassSaturationMultiplier;
         }
 
-        public int getFoliageOverlay()
-        {
+        public int getFoliageOverlay() {
             return this.foliageOverlay;
         }
 
-        public float getFoliageSaturationMultiplier()
-        {
+        public float getFoliageSaturationMultiplier() {
             return this.foliageSaturationMultiplier;
         }
-        
-        public int getBirchColor()
-        {
+
+        public int getBirchColor() {
             return this.birchColor;
         }
     }

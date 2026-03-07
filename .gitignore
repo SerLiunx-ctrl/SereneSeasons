@@ -8,6 +8,7 @@
 /.settings/
 /.classpath
 /.project
+.tools/
 
 # OS generated files
 *.DS_Store

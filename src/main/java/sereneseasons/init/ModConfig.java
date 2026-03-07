@@ -8,36 +8,24 @@
 package sereneseasons.init;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.gson.reflect.TypeToken;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
 import sereneseasons.config.BiomeConfig;
 import sereneseasons.config.ConfigHandler;
 import sereneseasons.config.SeasonsConfig;
-import sereneseasons.config.json.BiomeData;
-import sereneseasons.core.SereneSeasons;
-import sereneseasons.util.SeasonColourUtil;
-import sereneseasons.util.config.JsonUtil;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class ModConfig
-{
+public class ModConfig {
     public static List<ConfigHandler> configHandlers = Lists.newArrayList();
 
     public static SeasonsConfig seasons;
 
-    public static void preInit(File configDir)
-    {
+    public static void preInit(File configDir) {
         seasons = new SeasonsConfig(new File(configDir, "seasons.cfg"));
     }
 
-    public static void init(File configDir)
-    {
+    public static void init(File configDir) {
         BiomeConfig.init(configDir);
     }
 }
